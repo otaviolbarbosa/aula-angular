@@ -3,27 +3,40 @@
 	<title></title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 	<!-- js -->
+	<style type="text/css">
+		.well {
+			width: 500px;
+			margin: 10px auto;
+		}
+		.form-control {
+			margin-bottom: 5px;
+		}
+	</style>
 </head>
 <body ng-app="ngApp" ng-controller="ContatosCtrl">
 	<div class="container">
 		<div class="well">
-			<input type="text" ng-model="busca">
+			<input type="text" class="form-control" ng-model="busca" placeholder="Buscar">
 			<table class="table table-striped">
 				<tr>
+					<th></th>
 					<th>Nome</th>
 					<th>Telefone</th>
 					<th>E-mail</th>
-					<th>Salario</th>
-					<th>Data Nascimento</th>
 				</tr>
-				<tr ng-repeat="contato in contatos | orderBy: 'salario' | filter: busca | limitTo: 2">
-					<td>{{ contato.nome }}</td>
-					<td>{{ contato.telefone }}</td>
-					<td>{{ contato.email }}</td>
-					<td>{{ contato.salario | currency:'R$' }}</td>
-					<td>{{ contato.data | date: 'dd/MM/y' }}</td>
+				<tr ng-repeat="c in contatos | orderBy: 'salario' | filter: busca">
+					<td><input type="checkbox" ng-model="c.selecionado"> </td>
+					<td>{{ c.nome }}</td>
+					<td>{{ c.telefone }}</td>
+					<td>{{ c.email }}</td>
 				</tr>
 			</table>
+			<h4>Adicionar Contato</h4>
+			<input type="text" class="form-control" ng-model="contato.nome" placeholder="Nome">
+			<input type="text" class="form-control" ng-model="contato.telefone" placeholder="Telefone">
+			<input type="text" class="form-control" ng-model="contato.email" placeholder="E-mail">
+			<input type="button" class="btn btn-primary btn-block" value="Adicionar" ng-click="addContato(contato)">
+			<input type="button" class="btn btn-danger btn-block" value="Remover" ng-click="delContato(contatos)">
 		</div>
 	</div>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.8/angular.min.js"></script>
