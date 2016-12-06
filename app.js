@@ -1,8 +1,14 @@
 var app = angular.module('ngApp', []);
 
-app.controller('ContatosCtrl', function($scope, ContatoFactory, $http) {
-	$scope.contatos = ContatoFactory.loadContatos();
+app.controller('ContatosCtrl', function($scope, ContatoService, $http) {
 
+	//$scope.contatos = ContatoService.contatos;
+	ContatoService.loadContatos()
+		.success(function(data, status) {
+			console.log(status)
+			$scope.contatos = data
+		})
+	
 	$scope.addContato = function(contato) {
 		$scope.contatos.push(angular.copy(contato));
 		delete $scope.contato;
